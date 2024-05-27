@@ -128,22 +128,6 @@ export default defineComponent({
         loading.value = false
       })
     }
-    // // 删除功能
-    // const handleDel = (data: object[]) => {
-    //   let params = {
-    //     ids: data.map((e:any)=> {
-    //       return e.id
-    //     }).join(',')
-    //   }
-    //   del(params)
-    //   .then(res => {
-    //     ElMessage({
-    //       type: 'success',
-    //       message: '删除成功'
-    //     })
-    //     getTableData(tableData.value.length === 1 ? true : false)
-    //   })
-    // }
     //关闭任务
     const handleclose = (data: object[]) => {
       let params = {

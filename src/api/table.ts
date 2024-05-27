@@ -19,7 +19,13 @@ export function getCategory(data: object) {
     data
   })
 }
-
+export function get_config() {
+  return request({
+    url: '/get_config',
+    method: 'get',
+    // baseURL: '/mock',
+  })
+}
 // 获取树组织数据
 export function getTree(data: object) {
   return request({

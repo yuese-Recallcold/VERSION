@@ -1,34 +1,18 @@
 <template>
   <div class="system-table-box">
-    <el-table
-      v-bind="$attrs"
-      ref="table"
-      class="system-table"
-      border
-      height="100%"
-      :data="data"
-      @selection-change="handleSelectionChange"
-    >
+    <el-table v-bind="$attrs" ref="table" class="system-table" border height="100%" :data="data"
+      @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center" width="50" v-if="showSelection" />
       <!-- <el-table-column label="序号" width="60" align="center" v-if="showIndex">
         <template #default="scope">
           {{ (page.index - 1) * page.size + scope.$index + 1 }}
         </template>
-      </el-table-column> -->
+</el-table-column> -->
       <slot></slot>
     </el-table>
-    <el-pagination
-      v-if="showPage"
-      v-model:current-page="page.index"
-      class="system-page"
-      background
-      :layout="pageLayout"
-      :total="page.total"
-      :page-size="page.size"
-      :page-sizes="pageSizes"
-      @current-change="handleCurrentChange"
-      @size-change="handleSizeChange"
-    >
+    <el-pagination v-if="showPage" v-model:current-page="page.index" class="system-page" background :layout="pageLayout"
+      :total="page.total" :page-size="page.size" :page-sizes="pageSizes" @current-change="handleCurrentChange"
+      @size-change="handleSizeChange">
     </el-pagination>
   </div>
 </template>
@@ -74,9 +58,10 @@ export default defineComponent({
       context.emit("getTableData", true)
     }
     // 选择监听器
-    const handleSelectionChange = (val: []) =>{
+    const handleSelectionChange = (val: []) => {
       context.emit("selection-change", val)
     }
+
     // 解决BUG：keep-alive组件使用时，表格浮层高度不对的问题
     onActivated(() => {
       table.value.doLayout()
@@ -85,26 +70,35 @@ export default defineComponent({
       table,
       handleCurrentChange,
       handleSizeChange,
-      handleSelectionChange
+      handleSelectionChange,
     }
   }
 })
 </script>
 
 <style lang="scss" scoped>
-  .system-table-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+.system-table-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+
+  .system-table {
+    flex: 1;
     height: 100%;
-    .system-table {
-      flex: 1;
-      height: 100%;
-    }
-    
-    .system-page {
-      margin-top: 20px;
-    }
   }
+
+  .system-page {
+    margin-top: 20px;
+  }
+}
+
+.warning-row {
+  --el-table-tr-bg-color: red;
+}
+
+.success-row {
+  --el-table-tr-bg-color: var(--el-color-success-light-9);
+}
 </style>
