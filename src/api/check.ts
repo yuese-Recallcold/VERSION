@@ -43,3 +43,11 @@ export function add(data: object) {
       data
     })
   }
+  export function uploadexcel(data: object) {
+    return request({
+      url: '/upload',
+      method: 'post',
+      // baseURL: '/mock',
+      data
+    })
+  }

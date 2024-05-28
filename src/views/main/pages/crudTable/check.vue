@@ -3,7 +3,7 @@
   <div class="layout-container">
     <div class="layout-container-form flex space-between">
       <div class="layout-container-form-handle">
-        <ExcelUpload @upload-success="handleUploadSuccess" />
+        <ExcelUpload @upload-success="handleUploadSuccess":soversion="yourSoversionValue" />
         <el-popconfirm :title="$t('message.common.saveTip')" @confirm="handlesuccessadd(chooseData)">
           <template #reference>
             <el-button type="success" :icon="Delete" :disabled="chooseData.length === 0">{{
@@ -19,14 +19,14 @@
         <el-table-column prop="VIN" label="账号" align="center" width="200" />
         <el-table-column v-for="(column, index) in columns" :key="index" :prop="column.prop" width="200" align="center">
           <template #header="scope">
-            <div :style="{ color: column.type === 'True' ? 'green' : 'black' }">{{ column.label }}<br></div>
+            <div :style="{ color: column.type === 'True' ? 'green' : 'burlywood' }">{{ column.label }}<br></div>
             <div v-for="(value, index) in column.value" :key="index">
               {{ value }}
             </div>
           </template>
           <template #default="scope">
             <div
-              :class="{ 'green-background': column.value.includes(scope.row[column.prop]), 'red-background': !column.value.includes(scope.row[column.prop]) }">
+              :class="{ 'green-background':String(column.value).includes(scope.row[column.prop]), 'red-background': !String(column.value).includes(scope.row[column.prop]) }">
               {{ scope.row[column.prop] }}
             </div>
           </template>
@@ -92,6 +92,7 @@ export default defineComponent({
     const handleSelectionChange = (val: []) => {
       chooseData.value = val
     }
+     const yourSoversionValue = props.layer.row.soversion
      const columns = ref([])
     //根据版本获取版本校验字段标题
     // params <init> Boolean ，默认为false，用于判断是否需要初始化分页
@@ -136,6 +137,7 @@ export default defineComponent({
       columns,
       data_table_list,
       form,
+      yourSoversionValue,
       handleSelectionChange,
       getTableData,
       handleUploadSuccess,
