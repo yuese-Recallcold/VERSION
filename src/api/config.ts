@@ -9,7 +9,14 @@ export function getConfigName(data: object) {
       data
     })
   }
-
+  export function getversionName(data: object) {
+    return request({
+      url: '/getversionName',
+      method: 'post',
+    //   baseURL: '/mock',
+      data
+    })
+  }
   // 获取数据api
 export function getData(data: object) {
     return request({

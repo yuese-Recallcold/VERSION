@@ -12,6 +12,7 @@ const lang = {
       success:"成功",
       upgradeList:"升级列表",
       faillist:"失败列表",
+      checkwindows:"校验窗口",
       fail:"失败",
       revoke:"撤销",
       del: '删除',
@@ -51,7 +52,7 @@ const lang = {
         exportExcel:'导出文件'
       },
       page: {
-        name: '页面',
+        name: '任务管理',
         crudTable: '业务表格',
         categoryTable: '分类联动表格',
         treeTable: '树联动表格',
@@ -59,6 +60,9 @@ const lang = {
         work: '工作进度',
         baidu: '嵌套链接',
         jump: '新窗口跳转',
+        configTable:"基础配置",
+        checkconfigTable:"校验参数配置",
+        taskTable:"任务列表"
       },
       menu: {
         name: '多级嵌套菜单',

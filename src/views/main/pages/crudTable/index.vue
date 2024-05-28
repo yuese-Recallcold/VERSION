@@ -17,19 +17,21 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column prop="name" label="任务名称" align="center"width="500"/>
-        <!-- <el-table-column prop="source" label="来源" align="center" /> -->
+        <!-- <el-table-column prop="source" label="来源" align="center" />
         <el-table-column prop="project" label="项目" align="center" />
-        <!-- <el-table-column prop="prversion" label="项目版本" align="center" />
-        <el-table-column prop="soversion" label="软件版本" align="center" /> -->
-        <!-- <el-table-column prop="pullreason" label="推送原因" align="center" /> -->
+        <el-table-column prop="prversion" label="项目版本" align="center" /> -->
+        <el-table-column prop="soversion" label="软件版本" align="center" />
+        <!-- <el-table-column prop="network" label="网络" align="center" /> -->
+        <el-table-column prop="pullreason" label="推送原因" align="center" />
         <el-table-column prop="upgradingnum" label="升级中的数量" align="center" />
         <el-table-column prop="failnum" label="升级失败数量" align="center" />
         <el-table-column prop="remark" label="备注" align="center" />
         <el-table-column prop="createtime" label="创建时间" align="center" />
-        <el-table-column :label="$t('message.common.handle')" align="center" fixed="right" width="300">
+        <el-table-column :label="$t('message.common.handle')" align="center" fixed="right" width="400">
           <template #default="scope">
             <el-button type="success" @click="handlecat(scope.row)">{{ $t('message.common.upgradeList') }}</el-button>
             <el-button type="danger" @click="handlefail(scope.row)">{{ $t('message.common.faillist') }}</el-button>
+            <el-button type="warning" @click="handlecheck(scope.row)">{{ $t('message.common.checkwindows') }}</el-button>
             <el-popconfirm :title="$t('message.common.closeTip')" @confirm="handleclose([scope.row])">
               <template #reference>
                 <el-button type="warning">{{ $t('message.common.close') }}</el-button>
@@ -41,6 +43,7 @@
       <Layer :layer="layer" @getTableData="getTableData" v-if="layer.show" />
       <Account :layer="account" @getTableData="getTableData" v-if="account.show"></Account>
       <Fail :layer="fail" @getTableData="getTableData" v-if="fail.show" :tid="task.taskId"></Fail>
+      <Check :layer="check" @getTableData="getTableData" v-if="check.show"></Check>
     </div>
   </div>
 </template>
@@ -51,6 +54,7 @@ import { Page } from '@/components/table/type'
 import { getData, close } from '@/api/table'
 import Layer from './layer.vue'
 import Account from './account.vue'
+import Check from './check.vue'
 import Fail from './fail.vue'
 import { ElMessage } from 'element-plus'
 import type { LayerInterface } from '@/components/layer/index.vue'
@@ -61,7 +65,8 @@ export default defineComponent({
     Table,
     Layer,
     Account,
-    Fail
+    Fail,
+    Check
   },
   setup() {
     // 弹窗控制器
@@ -79,6 +84,12 @@ export default defineComponent({
     const fail: LayerInterface = reactive({
       show: false,
       title: '失败列表',
+      showButton: false,
+      
+    })
+    const check: LayerInterface = reactive({
+      show: false,
+      title: '校验窗口',
       showButton: false,
       
     })
@@ -166,6 +177,12 @@ export default defineComponent({
       fail.show = true
       fail.width= "1500px"
     }
+    const handlecheck =(row: any) => {
+      check.row = row
+      check.title = row.name +"校验窗口"
+      check.show = true
+      check.width= "1500px"
+    }
     // 编辑弹窗功能
     const handleEdit = (row: object) => {
       layer.title = '编辑数据'
@@ -185,13 +202,15 @@ export default defineComponent({
       layer,
       account,
       fail,
+      check,
       handleSelectionChange,
       handleAdd,
       handleEdit,
       getTableData,
       handlecat,
       handlefail,
-      handleclose
+      handleclose,
+      handlecheck
     }
   },
 })
