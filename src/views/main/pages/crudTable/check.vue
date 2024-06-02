@@ -3,7 +3,7 @@
   <div class="layout-container">
     <div class="layout-container-form flex space-between">
       <div class="layout-container-form-handle">
-        <ExcelUpload @upload-success="handleUploadSuccess":soversion="yourSoversionValue" />
+        <ExcelUpload @upload-success="handleUploadSuccess":soversion="yourSoversionValue" :api="Api"/>
         <el-popconfirm :title="$t('message.common.saveTip')" @confirm="handlesuccessadd(chooseData)">
           <template #reference>
             <el-button type="success" :icon="Delete" :disabled="chooseData.length === 0">{{
@@ -93,6 +93,7 @@ export default defineComponent({
       chooseData.value = val
     }
      const yourSoversionValue = props.layer.row.soversion
+     const Api =  '/api/upload'
      const columns = ref([])
     //根据版本获取版本校验字段标题
     // params <init> Boolean ，默认为false，用于判断是否需要初始化分页
@@ -137,6 +138,7 @@ export default defineComponent({
       columns,
       data_table_list,
       form,
+      Api,
       yourSoversionValue,
       handleSelectionChange,
       getTableData,

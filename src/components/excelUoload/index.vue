@@ -31,7 +31,8 @@ const handlePreview = (file: any) => {
   console.log(file);
 };
 const props = defineProps({
-  soversion: String, // 从父组件接收soversion
+  soversion: String, // 从父组件接收soversion'
+  api: String
 });
 const handleExceed = (files: string | any[], fileList: any) => {
   ElMessage.warning(`只能上传1个文件,当前选择了 ${files.length} 个文件`);
@@ -51,19 +52,19 @@ const handleBeforeUpload = async (file: { name: string; }) => {
     formData.append('file', file);
     // 可以在这里添加其他参数
     formData.append('soversion', props.soversion);
-
     // 使用axios上传文件并携带参数
-    const response = await (http.value.post('/api/upload', formData, {
+    console.log(props.api);
+    
+    const response = await (http.value.post(props.api, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     }));
-
     // 处理响应
     if (response.status === 200) {
       ElMessage.success('文件上传成功');
       // 触发自定义事件 upload-success，并携带额外参数
-      emit('upload-success', response.data);
+      emit('upload-success', response.data.data);
     } else {
       ElMessage.error('文件上传失败');
     }
@@ -72,10 +73,6 @@ const handleBeforeUpload = async (file: { name: string; }) => {
     console.error('上传文件时发生错误:', error);
     return false; // 返回false将取消上传
   }
-};
-
-const handleSuccess = (response: any, file: any, fileList: any) => {
-  // 处理上传成功的逻辑
 };
 
 // 使用 defineEmits 定义事件
